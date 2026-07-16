@@ -1,0 +1,30 @@
+
+import pandas as pd
+import streamlit as st 
+
+st.set_page_config(page_title='학생 정보')
+st.header("헤더")
+
+no=st.text_input("학번:")
+name=st.text_input("이름:")
+major=st.text_input("전공:")
+
+if 'students' not in st.session_state :
+    st.session_state['students']=[]
+
+if st.button("등록") :
+    if name and no and major :
+        st.session_state['students'].append(
+            {
+                '학번': no,
+                '이름' : name,
+                '전공' : major
+            }
+        )
+    else :
+        st.warning('정보 입력')
+
+df = pd.DataFrame(st.session_state['students'])
+
+st.subheader("학생 정보 : ")
+st.dataframe(df)
